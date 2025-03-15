@@ -5,8 +5,8 @@ public class CameraLook : MonoBehaviour
     public float sensitivity = 0.5f; // Чувствительность вращения
     public Joystick joystick; // Ссылка на джойстик
 
+    private float xRotation = 0f; // Текущий угол поворота по оси X
     private int joystickFingerId = -1; // ID пальца, который касается джойстика
-    private Vector2 touchStartPosition;
 
     void Update()
     {
@@ -37,9 +37,10 @@ public class CameraLook : MonoBehaviour
 
                 // Вращение по оси X (вертикальное)
                 float mouseY = touchDelta.y * sensitivity;
-                float xRotation = transform.localEulerAngles.x - mouseY;
+                xRotation -= mouseY;
                 xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Ограничиваем угол
 
+                // Применяем поворот к камере
                 transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
             }
 
